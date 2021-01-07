@@ -77,6 +77,7 @@ function VSTSRestBuilds() {
   const allowedAPIVersions = Object.freeze({
     '2.0':      '2.0',
     '4.1':      '4.1',
+    '5.0':      '5.0',
     undefined:  '2.0'
   });
   
@@ -165,7 +166,7 @@ function VSTSRestBuilds() {
     project = config.project;
     collection = config.collection || 'DefaultCollection';
     includeQueued = config.includeQueued || false;
-    apiVersion = allowedAPIVersions[config.apiVersion] || '2.0';
+    apiVersion = allowedAPIVersions[config.apiVersion] || '5.0';
     showBuildStep = config.showBuildStep || false;
     
     
@@ -178,7 +179,7 @@ function VSTSRestBuilds() {
    *  requested build information
    */
   const getListOfBuilds = (callback) => {
-    const apiUrl = `${url}/${collection}/${project}/_apis/build/builds?api-version=${apiVersion}${params}`;
+    const apiUrl = `${url}/${project}/_apis/build/builds?api-version=${apiVersion}${params}`;
     let options = {
       url : apiUrl,
       headers: {
@@ -341,7 +342,7 @@ function VSTSRestBuilds() {
 
       // Get the second to last build instead
       const options = {
-        url: `${url}/${collection}/${project}/_apis/build/builds?api-version=${apiVersion}&definitions=${def}&$top=2`
+        url: `${url}/${project}/_apis/build/builds?api-version=${apiVersion}&definitions=${def}&$top=2`
       };
 
       request.makeRequest(options, (err, body) => {
